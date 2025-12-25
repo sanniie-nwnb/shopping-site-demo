@@ -1,0 +1,84 @@
+/* Time Parting info:
+	
+	var tp = s.getTimeParting(h,z);
+	h = hemisphere ('n' or 's')
+	z = Time Zone (e.g., -5 EST, 0 GMT, 1 CET, 5.5 IST, 9 JST, 10 AEST)
+
+*/
+
+
+/*
+ * Copy and pasted everything below into "Customize Page Code"
+ * You can remove the DST Arrays that you are not using or just
+ * leave them commented out.
+ */
+
+
+
+s.usePlugins=true
+s.doPlugins = function(s) {
+
+	var tp = s.getTimeParting('n','-7');
+	s.prop50 = tp; 
+	s.eVar50 = "D=c50"; 
+	
+
+};
+
+//Time Parting Configuration
+
+//US
+s._tpDST = {
+2012:'3/11,11/4',
+2013:'3/10,11/3',
+2014:'3/9,11/2',
+2015:'3/8,11/1',
+2016:'3/13,11/6',
+2017:'3/12,11/5',
+2018:'3/11,11/4',
+2019:'3/10,11/3'}
+
+/* * * * *
+
+//Europe
+s._tpDST = {
+2012:'3/25,10/28',
+2013:'3/31,10/27',
+2014:'3/30,10/26',
+2015:'3/29,10/25',
+2016:'3/27,10/30',
+2017:'3/26,10/29',
+2018:'3/25,10/28',
+2019:'3/31,10/27'}
+
+//Australia
+s._tpDST = {
+2012:'4/1,10/7',
+2013:'4/7,10/6',
+2014:'4/6,10/5',
+2015:'4/5,10/4',
+2016:'4/3,10/2',
+2017:'4/2,10/1',
+2018:'4/1,10/7',
+2019:'4/7,10/6'}
+ 
+* * * * */ 
+
+ 
+
+/*
+ * Plugin: getTimeParting 3.4
+ */
+s.getTimeParting=new Function("h","z",""
++"var s=this,od;od=new Date('1/1/2000');if(od.getDay()!=6||od.getMont"
++"h()!=0){return'Data Not Available';}else{var H,M,D,U,ds,de,tm,da=['"
++"Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturda"
++"y'],d=new Date();z=z?z:0;z=parseFloat(z);if(s._tpDST){var dso=s._tp"
++"DST[d.getFullYear()].split(/,/);ds=new Date(dso[0]+'/'+d.getFullYea"
++"r());de=new Date(dso[1]+'/'+d.getFullYear());if(h=='n'&&d>ds&&d<de)"
++"{z=z+1;}else if(h=='s'&&(d>de||d<ds)){z=z+1;}}d=d.getTime()+(d.getT"
++"imezoneOffset()*60000);d=new Date(d+(3600000*z));H=d.getHours();M=d"
++".getMinutes();M=(M<10)?'0'+M:M;D=d.getDay();U=' AM';if(H>=12){U=' P"
++"M';H=H-12;}if(H==0){H=12;}D=da[D];tm=H+':'+M+U;return(tm+'|'+D);}");
+
+
